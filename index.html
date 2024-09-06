@@ -37,7 +37,7 @@
         position: fixed;
         bottom: 20px;
         left: 20px;
-        background-color: transparent; /* Make background transparent */
+        background-color: transparent;
         color: white;
         padding: 10px 20px;
         border: none;
@@ -46,7 +46,7 @@
       }
 
       #customButton:hover {
-        text-decoration: underline; /* Optional hover effect */
+        text-decoration: underline;
       }
 
       /* Hide the VR button */
@@ -70,13 +70,15 @@
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity id="target" mindar-image-target="targetIndex: 0">
+        <!-- Adjust width and height based on video aspect ratio -->
         <a-plane
           material="src: #video"
           position="0 0 0"
-          height="1.5"
-          width="1"
-          rotation="0 0 0"
-          scale="1 1 1">
+          height="0.8"   <!-- Set height to fit the video -->
+          <width="1.6" />    <!-- Set width to maintain aspect ratio -->
+          <rotation="0 0 0" />
+          <scale="1 1 1" />
+          
         </a-plane>
       </a-entity>
     </a-scene>
