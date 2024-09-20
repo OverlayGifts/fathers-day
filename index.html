@@ -70,16 +70,11 @@
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity id="target" mindar-image-target="targetIndex: 0">
-        <!-- Adjust width and height based on video aspect ratio -->
         <a-plane
           material="src: #video"
           position="0 0 0"
-          height="0.8"   <!-- Set height to fit the video -->
-          <width="1.6" />    <!-- Set width to maintain aspect ratio -->
-          <rotation="0 0 0" />
-          <scale="1 1 1" />
-          
-        </a-plane>
+          height="0.8"
+          width="1.6" />
       </a-entity>
     </a-scene>
 
@@ -112,15 +107,18 @@
         }
       });
 
-      const target = document.querySelector('#target');
-      target.addEventListener('mindar-image-target-visible', () => {
-        if (!video.muted) {
-          video.play();
-          buttonText.textContent = 'Pause';
-        }
+      // Use MindAR's `targetFound` and `targetLost` events
+      document.querySelector('a-scene').addEventListener('targetFound', (event) => {
+        // Start the video and unmute when the target is found
+        video.play();
+        video.muted = false;  // Unmute when target is found
+        buttonText.textContent = 'Pause';
       });
-      target.addEventListener('mindar-image-target-invisible', () => {
+
+      document.querySelector('a-scene').addEventListener('targetLost', (event) => {
+        // Pause the video and mute when the target is lost
         video.pause();
+        video.muted = true;  // Mute when target is lost
         buttonText.textContent = 'Play with Sound';
       });
     </script>
